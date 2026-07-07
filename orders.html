@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Замовлення | TECH SPACE</title>
+
+<link rel="stylesheet" href="admin.css">
+
+</head>
+
+<body>
+
+    <div class="admin-page orders-page">
+
+<h1>
+
+🛒 Панель менеджера
+
+</h1>
+
+<div class="top-tabs">
+
+<a href="index.html" class="top-tab">
+📦 Товари
+</a>
+
+<a href="orders.html" class="top-tab active">
+🛒 Замовлення
+</a>
+
+</div>
+
+<div class="orders-top">
+
+<input
+id="searchOrder"
+class="order-search"
+placeholder="🔍 Пошук..."
+oninput="filterOrders()">
+
+<select
+id="sortOrders"
+class="sort-orders"
+onchange="loadOrders()">
+
+<option value="all">
+📋 Всі замовлення
+</option>
+
+<option value="new">
+🟠 Нові
+</option>
+
+<option value="processing">
+🔵 В обробці
+</option>
+
+<option value="sent">
+🚚 Відправлено
+</option>
+
+<option value="done">
+✅ Виконані
+</option>
+
+<option value="cancel">
+❌ Скасовані
+</option>
+
+</select>
+
+</div>
+
+<table class="orders-table">
+
+<thead>
+
+<tr>
+
+<th>№</th>
+
+<th>Номер</th>
+
+<th>Дата</th>
+
+<th>Покупець</th>
+
+<th>Телефон</th>
+
+<th>Email</th>
+
+<th>Місто</th>
+
+<th>Сума</th>
+
+<th>Статус</th>
+
+<th>Дії</th>
+
+</tr>
+
+</thead>
+
+<tbody id="ordersTable">
+
+</tbody>
+
+</table>
+
+<div id="ordersCards"></div>
+
+</div>
+
+<div id="orderModal" class="modal">
+
+<div class="modal-content">
+
+<span
+class="close"
+onclick="closeOrder()">
+
+✕
+
+</span>
+
+<h2>
+
+Замовлення
+
+</h2>
+
+<div id="orderInfo">
+
+</div>
+
+</div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+
+const supabaseUrl =
+"https://buylbzuygvqnerjbvbxo.supabase.co";
+
+const supabaseKey =
+"sb_publishable_ZSzxpxVaUu1OSQvnCa8K4w_yG3Yx10e";
+
+const db =
+window.supabase.createClient(
+supabaseUrl,
+supabaseKey
+);
+
+</script>
+
+<script>
+
+async function checkAdmin(){
+
+const { data } =
+await db.auth.getSession();
+
+if(!data.session){
+
+window.location.href =
+"index.html";
+
+}
+
+}
+
+checkAdmin();
+
+</script>
+
+<script src="orders.js"></script>
+
+<button id="scrollTopBtn" onclick="scrollToTop()">
+⬆
+</button>
+
+</body>
+
+</html>

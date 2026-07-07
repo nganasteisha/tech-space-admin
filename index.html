@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Адмінка | TECH SPACE</title>
+
+<link rel="stylesheet" href="admin.css">
+
+<style>
+
+.admin-page{
+max-width:900px;
+margin:40px auto;
+padding:30px;
+background:#081a3b;
+border-radius:20px;
+}
+
+.admin-page h1{
+text-align:center;
+margin-bottom:30px;
+}
+
+.admin-form{
+display:flex;
+flex-direction:column;
+gap:15px;
+}
+
+.admin-form input,
+.admin-form textarea,
+.admin-form select{
+padding:15px;
+border:none;
+border-radius:12px;
+background:#12264d;
+color:white;
+font-size:16px;
+}
+
+.admin-form textarea{
+height:120px;
+resize:none;
+}
+
+.admin-btn{
+padding:15px;
+border:none;
+border-radius:12px;
+background:#2d8cff;
+color:white;
+font-size:18px;
+font-weight:bold;
+cursor:pointer;
+}
+
+.admin-btn:hover{
+opacity:0.9;
+}
+
+</style>
+
+</head>
+
+<body>
+
+    <div class="admin-page">
+
+    <h1>
+⚙️ Панель менеджера
+</h1>
+
+<div class="top-tabs">
+
+<a href="index.html" class="top-tab active">
+📦 Товари
+</a>
+
+<a href="orders.html" class="top-tab">
+🛒 Замовлення
+</a>
+
+</div>
+
+<div class="admin-form">
+
+<input
+id="adminSearch"
+placeholder="🔍 Пошук товару..."
+oninput="filterProducts()"
+>
+
+<select id="productSelect">
+
+<option value="">
+Оберіть товар
+</option>
+
+</select>
+
+<input
+id="name"
+placeholder="Назва товару"
+>
+
+<input
+id="price"
+type="number"
+placeholder="Ціна"
+>
+
+<input
+id="stock"
+type="number"
+placeholder="Кількість"
+>
+
+<input
+id="category"
+placeholder="Категорія">
+
+<input
+id="brand"
+placeholder="Бренд">
+
+<input
+id="model"
+placeholder="Модель">
+
+<textarea
+id="characteristics"
+placeholder="Характеристики товару">
+</textarea>
+
+<select id="status">
+
+<option>
+В наявності
+</option>
+
+<option>
+Під замовлення
+</option>
+
+<option>
+Немає в наявності
+</option>
+
+</select>
+
+<label class="upload-btn">
+
+Обрати фото
+
+<input
+id="image"
+type="file"
+accept="image/*"
+hidden>
+
+</label>
+
+<p id="fileName">
+
+Фото не вибрано
+
+</p>
+
+<img
+id="previewImage"
+style="
+width:200px;
+margin:auto;
+border-radius:15px;
+display:none;
+">
+
+<button
+type="button"
+class="admin-btn delete-image-btn"
+onclick="removeImage()">
+🗑 Видалити фото
+</button>
+
+<button
+class="admin-btn"
+onclick="saveProduct()"
+>
+💾 Зберегти зміни
+</button>
+
+<button
+class="admin-btn add-btn"
+onclick="addProduct()">
+
+Додати товар
+
+</button>
+
+<button
+class="admin-btn delete-btn"
+onclick="deleteProduct()">
+
+Видалити товар
+
+</button>
+
+
+
+</div>
+
+</div>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+
+const supabaseUrl =
+"https://buylbzuygvqnerjbvbxo.supabase.co";
+
+const supabaseKey =
+"sb_publishable_ZSzxpxVaUu1OSQvnCa8K4w_yG3Yx10e";
+
+const db =
+window.supabase.createClient(
+supabaseUrl,
+supabaseKey
+);
+
+</script>
+
+<script>
+
+async function checkAdmin(){
+
+const { data } =
+await db.auth.getSession();
+
+if(!data.session){
+
+window.location.href =
+"index.html";
+
+}
+
+}
+
+checkAdmin();
+
+</script>
+
+<script src="admin.js"></script>
+
+</body>
+</html>
